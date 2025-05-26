@@ -1,6 +1,7 @@
 #!/bin/bash
-# Start recording syscalls in background
+
+echo "Starting sysdig capture in background..."
 sysdig -w /tmp/sysdig_capture.scap &
 
-# Start Tomcat
+echo "Starting Tomcat server..."
 exec catalina.sh run
