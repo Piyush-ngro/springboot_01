@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# Start Sysdig capture with nohup and log redirection
-echo "Starting sysdig capture..."
-nohup sysdig -w /tmp/sysdig_capture.scap > /tmp/sysdig.log 2>&1 &
+# Start Sysdig with proper redirection
+sysdig -w /tmp/sysdig_capture.scap > /var/log/sysdig.log 2>&1 &
 
-# Ensure Sysdig starts before Tomcat
-sleep 5
+# Verify Sysdig is running
+sleep 2
+if ! pgrep -x "sysdig" >/dev/null; then
+    echo "Sysdig failed to start!" >&2
+    exit 1
+fi
 
 # Start Tomcat
-echo "Starting Tomcat server..."
 exec catalina.sh run
