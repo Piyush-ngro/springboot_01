@@ -1,7 +1,6 @@
 #!/bin/bash
+# Start recording syscalls in background
+sysdig -w /tmp/sysdig_capture.scap &
 
-# Start sysdig capture in background (captures all container activity)
-sysdig -w /tmp/sysdig_capture.scap "evt.type=open" &
-
-# Start Tomcat normally
+# Start Tomcat
 exec catalina.sh run
